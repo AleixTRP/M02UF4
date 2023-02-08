@@ -24,26 +24,31 @@ dbConnect()
 .catch(console.error);
 
 http.createServer(function(request, response) {
+
 console.log("Alguien se conecta");
 
 if (request.url == "/favicon.ico") {
 return;
 	
 	}
-		if (request.url == "/Characters") {
-	
-	collection = db.collection('Characters');
+if (request.url == "/Characters") {
+		function send_characters (response)
+		{
+	let collection = db.collection('Characters');
 															
-collection.find({}).toArray().then(characters => {
+															
+	collection.find({}).toArray().then(characters => {
 
-console.log(characters);
+	console.log(characters);
 
-let charactersName = [];
+	let charactersName = [];
 
-for (let i = 0; i < characters.length; i++)
-{
-charactersName.push(characters[i].name);
-}
+	for (let i = 0; i < characters.length; i++)
+	{
+	charactersName.push(characters[i].name);
+	}
+
+	
 
 response.write(JSON.stringify(charactersName));
 response.end();
