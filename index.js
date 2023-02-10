@@ -23,23 +23,24 @@ dbConnect()
 .then(console.log)
 .catch(console.error);
 
-function send_characters (response)
+function send_Characters (response)
 {
 
 	collection = db.collection('Characters');
 
-	collection.find({}).toArray().then(characters => {
+	collection.find({}).toArray().then(Characters => {
 
 	let names = [];
 							
-	for (let i = 0; i < characters.length; i++){
+	for (let i = 0; i < Characters.length; i++){
 										
-	names.push(characters[i].name);
+	names.push(Characters[i].name);
 }
+
 
 if (request.url == "Characters"){
 																
-	names.push(characters[i].name);
+	names.push(Characters[i].name);
 }
 	response.write(JSON.stringify(names));
 																											
@@ -64,12 +65,12 @@ function send_age(response,url)
 let collection = db.collection('Characters');
 console.log(url);
 
-collection.find({"name":url[2]}).toArray().then(character => {
+collection.find({"name":url[2]}).toArray().then(Character => {
 
-console.log(character);
+console.log(Character);
 
 let data = {
-		age: character[0].age
+		age: Character[0].age
 };
 
 		response.write(JSON.stringify(data));
@@ -91,14 +92,14 @@ let url = request.url.split("/");
 switch (url[1])
 {
 case "Characters":
-	send_characters(response);
+	send_Characters(response);
 	break;
 		case "age":
 			send_age(response,url);
 			break;
 
 		default:
-		response.write("Página principal");
+		response.write("Pagina principal");
 		response.end();
 		}
 });
