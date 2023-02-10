@@ -2,7 +2,7 @@
 
 const http = require('http');
 const { MongoClient } = require('mongodb');
-
+const fs = require('fs');
 
 // Connection URL
 const url = 'mongodb://127.0.0.1:27017';
@@ -98,10 +98,21 @@ console.log(url);
 			break;
 
 		default:
-		
-		response.write("Pagina principal");
-		
-		response.end();
+		fs.readFile("index.html", function(err,data){
+			if(err)
+			{
+				console.error(err);
+				response.write(404,{'Content-Type':'text/html'});
+				response.write("Error:404: El archivo no esta aqui");
+				response.end();
+				
+				return;
+				}
+				response.writeHead(200,{'Content-Type':'text/html'});
+				response.write(data);
+				response.end();
+			
+			});
 		}
 });
 	
