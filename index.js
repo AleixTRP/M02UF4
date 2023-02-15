@@ -24,24 +24,64 @@ dbConnect()
 .then(console.log)
 .catch(console.error);
 
+
 function send_Characters (response)
 {
 
-	collection = db.collection('Characters');
+collection = db.collection('Characters');
 
-	collection.find({}).toArray().then(Characters => {
+collection.find({}).toArray().then(Characters => 
+{
 
-		let names = [];
-							
-			for (let i = 0; i < Characters.length; i++){
-										
-			names.push(Characters[i].name);
-}
+	let names = [];
+											
+for (let i = 0; i < Characters.length; i++)
+	{
+																								
+																											names.push(Characters[i].name);
+																											}
+	
+																												response.write(JSON.stringify(names));
+																												response.end();
+																													});
+																												}
 
-	response.write(JSON.stringify(names));
-		response.end();
-	});
-}
+
+function send_items (response)
+{
+
+collection = db.collection('items');
+
+collection.find({}).toArray().then(items => 
+{
+
+	let names = [];
+											
+for (let i = 0; i < items.length; i++)
+	{
+	names.push(items[i].item);
+																											}
+	
+																												response.write(JSON.stringify(names));										response.end();																			});
+																											}
+
+function send_weapons (response)
+{
+
+collection = db.collection('weapons');
+
+collection.find({}).toArray().then(weapons => 
+{
+
+	let names = [];
+											
+for (let i = 0; i < weapons.length; i++)
+	{
+	names.push(weapons[i].weapon);
+																											}
+	
+																												response.write(JSON.stringify(names));										response.end();																			});
+																											}
 
 
 
@@ -89,6 +129,14 @@ console.log(url);
 			
 			send_Characters(response);
 				
+				break;
+		case "items":
+			send_items(response);
+
+				break;
+		case "weapons":
+			send_weapons(response);
+
 				break;
 		
 		case "age":

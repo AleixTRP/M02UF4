@@ -18,7 +18,7 @@
 
 <li><button id="item-button" onclick="getItems(); return false">Items</button></li>
 
-<li><button id="weapon-button">Armas</button></li>
+<li><button id="weapon-button" onclick="getWeapons(); return false">Weapons</button></li>
 
 </ul>
 
@@ -54,7 +54,7 @@ function getCharacters()
 function getItems()
 {
 
-	fetch("http://10.40.2.79:6969/Items")
+	fetch("http://10.40.2.79:6969/items")
 		.then(response => response.json())
 		.then(items => {
 
@@ -69,6 +69,25 @@ function getItems()
 			document.getElementById("container").innerHTML = list;
 	});
 }
+function getWeapons()
+{
+
+	fetch("http://10.40.2.79:6969/weapons")
+		.then(response => response.json())
+		.then(weapons => {
+
+	let list = "<ul>";
+
+		for(let i = 0; i < weapons.length;i++)
+		{
+			list +="<li>" + weapons[i] + "</li>";
+			}
+				list += "</ul>"
+
+			document.getElementById("container").innerHTML = list;
+	});
+}
+
 
 
 </script>
