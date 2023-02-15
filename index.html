@@ -14,9 +14,9 @@
 
 <ul>
 
-<li><button id="characters-button">Personaje</button></li>
+<li><button id="characters-button" onclick="getCharacters(); return false">Characters</button></li>
 
-<li><button id="item-button">Objeto</button></li>
+<li><button id="item-button" onclick="getItems(); return false">Items</button></li>
 
 <li><button id="weapon-button">Armas</button></li>
 
@@ -31,7 +31,47 @@
 <main id="container">
 
 </main>
+<script>
+function getCharacters()
+{
 
+	fetch("http://10.40.2.79:6969/Characters")
+		.then(response => response.json())
+		.then(characters => {
+
+	let list = "<ul>";
+
+		for(let i = 0; i < characters.length;i++)
+		{
+			list +="<li>" + characters[i] + "</li>";
+			}
+				list += "</ul>"
+
+			document.getElementById("container").innerHTML = list;
+	});
+}
+
+function getItems()
+{
+
+	fetch("http://10.40.2.79:6969/Items")
+		.then(response => response.json())
+		.then(items => {
+
+	let list = "<ul>";
+
+		for(let i = 0; i < items.length;i++)
+		{
+			list +="<li>" + items[i] + "</li>";
+			}
+				list += "</ul>"
+
+			document.getElementById("container").innerHTML = list;
+	});
+}
+
+
+</script>
 </body>
 
 </html>
