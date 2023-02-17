@@ -42,8 +42,30 @@ for (let i = 0; i < Characters.length; i++)
 }
  response.write(JSON.stringify(names));
 	response.end();
-});
+		});
 	}
+
+function send_character_items (response, url)
+{
+	let name = url[2].trim();
+		if(name == "")
+		{
+			response.write("ERROR: URL ,al formada");
+				response.end();
+
+				return;
+	}
+			let collection = db.collection('Characters');
+				collection.find({"name":name}).toArray().then(character =>{
+							if(character.length != 1)
+							{
+								response.write("ERROR: El personaje "+name+" no existe");
+									response.end();
+	
+									return;
+						}
+			});
+}
 
 
 function send_items (response)
