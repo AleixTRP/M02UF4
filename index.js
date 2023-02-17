@@ -10,6 +10,7 @@ const client = new MongoClient(url);
 
 // Database Name
 const dbName = 'abascal';
+
 let db;
 let collection;
 
@@ -64,9 +65,34 @@ function send_character_items (response, url)
 	
 									return;
 						}
-			});
-}
+						let id = character[0].id_character;
 
+						let collection = db.collection('characters_items');
+						collection.find({"id_character":id}).toArray().then(ids => {
+						if(ids.length == 0)
+						{
+							response.write("[]");
+							response.end();
+								return;
+							}
+							let ids_items = [];
+             		ids.forEach(element => 
+								{
+									ids_items.push(element.id_item);
+
+							});
+
+							 let collection = db.collection('items');
+							 collection.find({"id_item":{$in:ids_items}  }).toArray().then(items => {
+							 	
+									response.write(JSON.stringify(items));
+									response.end();
+										return;
+
+							 });
+					});
+		});
+}
 
 function send_items (response)
 {
