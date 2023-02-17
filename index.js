@@ -38,17 +38,21 @@ collection.find({}).toArray().then(Characters =>
 for (let i = 0; i < Characters.length; i++)
 	{
 																								
-																											names.push(Characters[i].name);
-																											}
-	
-																												response.write(JSON.stringify(names));
-																												response.end();
-																													});
-																												}
+	names.push(Characters[i].name);
+}
+ response.write(JSON.stringify(names));
+	response.end();
+});
+	}
 
 
 function send_items (response)
 {
+	if (url.length >= 3)
+	{
+		send_characters_items (response,url);
+		return;
+}
 
 collection = db.collection('items');
 
@@ -60,11 +64,11 @@ collection.find({}).toArray().then(items =>
 for (let i = 0; i < items.length; i++)
 	{
 	names.push(items[i].item);
-																											}
-	
-																												response.write(JSON.stringify(names));										response.end();																			});
-																											}
-
+}
+response.write(JSON.stringify(names));										
+	response.end();																			
+	});
+}
 function send_weapons (response)
 {
 
@@ -78,10 +82,14 @@ collection.find({}).toArray().then(weapons =>
 for (let i = 0; i < weapons.length; i++)
 	{
 	names.push(weapons[i].weapon);
-																											}
-	
-																												response.write(JSON.stringify(names));										response.end();																			});
-																											}
+}	
+
+response.write(JSON.stringify(names));
+
+response.end();	
+});
+		
+		}
 
 
 
@@ -131,7 +139,7 @@ console.log(url);
 				
 				break;
 		case "items":
-			send_items(response);
+			send_items(response, url);
 
 				break;
 		case "weapons":

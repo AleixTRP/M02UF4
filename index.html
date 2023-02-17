@@ -35,7 +35,7 @@
 function getCharacters()
 {
 
-	fetch("http://10.40.2.79:6969/Characters")
+	fetch("/Characters")
 		.then(response => response.json())
 		.then(characters => {
 
@@ -54,7 +54,7 @@ function getCharacters()
 function getItems()
 {
 
-	fetch("http://10.40.2.79:6969/items")
+	fetch("/items")
 		.then(response => response.json())
 		.then(items => {
 
@@ -72,7 +72,7 @@ function getItems()
 function getWeapons()
 {
 
-	fetch("http://10.40.2.79:6969/weapons")
+	fetch("/weapons")
 		.then(response => response.json())
 		.then(weapons => {
 
