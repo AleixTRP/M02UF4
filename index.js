@@ -211,6 +211,8 @@ function insert_character (request, response)
 				};
 
 				collection.insertOne(info);
+				
+				response.write("Nuevo Personaje "+insert_info.name+" insertado");
 
 				response.end();
 		});
