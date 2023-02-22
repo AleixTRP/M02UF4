@@ -3,6 +3,7 @@
 const http = require('http');
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
+const qs = require('querystring');
 
 // Connection URL
 const url = 'mongodb://127.0.0.1:27017';
@@ -110,12 +111,12 @@ collection.find({}).toArray().then(items =>
 	let names = [];
 											
 for (let i = 0; i < items.length; i++)
-	{
+{
 	names.push(items[i].item);
 }
 response.write(JSON.stringify(names));										
 	response.end();																			
-	});
+});
 }
 function send_weapons (response)
 {
@@ -130,6 +131,7 @@ collection.find({}).toArray().then(weapons =>
 for (let i = 0; i < weapons.length; i++)
 	{
 	names.push(weapons[i].weapon);
+
 }	
 
 response.write(JSON.stringify(names));
@@ -167,10 +169,57 @@ console.log(url);
 	});
 }
 
+function insert_character (request, response)
+{
+		if (request.method != "POST")
+		{
+				response.write("ERROR: Formulario no enviado");
+				response.end();
+				return;
+		}
+		let data= "";
+		request.on('data',function(character_chunk)
+		{
+				data += character_chunk;
+
+
+		});
+
+		request.on('end', function()
+		{
+				console.log(data);
+				
+				let info = qs.parse(data);
+				
+				console.log(info);
+				let collection = db.collection("Characters");
+
+				if(info.name == undefined)
+				{
+					response.write("Error: Nombre no definido");					response.end();
+					return;
+				}
+		    if(info.age == undefined)
+				{
+					response.write("Error: Edad  no definido");					response.end();
+					return;
+				}
+				let insert_info = 
+				{
+					name: info.name;
+					age : parseInt(info.age);
+				};
+
+				collection.insertOne(info);
+
+				response.end();
+		});
+}
+
 
 	let http_server = http.createServer(function(request, response) {
 
-	console.log("Alguien se conecta");
+	
 
 	if (request.url == "/favicon.ico") {
 	
@@ -187,18 +236,22 @@ console.log(url);
 				
 				break;
 		case "items":
+			
 			send_items(response, url);
 
 				break;
 		case "weapons":
+			
 			send_weapons(response);
-
-				break;
+			break;
 		
 		case "age":
 			
 			send_age(response,url);
-			
+			break;
+		case "character_form":
+
+			insert_character(request,response);
 			break;
 
 		default:
