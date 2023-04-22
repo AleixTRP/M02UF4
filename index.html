@@ -1,110 +1,157 @@
-<!DOCTYPE html> 	
+<DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>ENTI SERVER</title>
+<title>MongoDB+NodeJS</title>
 </head>
-
 <body>
 <header>
-<h1> SERVER </h1>
-
+<h1>MongoDB+NodeJS</h1>
 <nav>
-
 <form>
-
 <ul>
-
-<li><button id="characters-button" onclick="getCharacters(); return false">Characters</button></li>
-
-<li><button id="item-button" onclick="getItems(); return false">Items</button></li>
-
-<li><button id="weapon-button" onclick="getWeapons(); return false">Weapons</button></li>
-
+<li><button id="characters-button" onclick="getCharacters(); return false;">Personajes</button></li>
+<li><button id="items-button" onclick="getItems(); return false;">Objetos</button></li>
+<li><button id="weapons-button" onclick="getWeapons(); return false;">Armas</button></li>
 </ul>
-
 </form>
-
+<section>
+<form id="characters">
+<ul>
+<li><button id="payoh-button" onclick="getCharactersInfo(1); return false;">Payoh</button></li>
+<li><button id="yulen-button" onclick="getCharactersInfo(2); return false;">Yulen</button></li>
+<li><button id="yuca-button" onclick="getCharactersInfo(3); return false;">Yuca</button></li>
+<li><button id="josema-button" onclick="getCharactersInfo(4); return false;">Josema</button></li>
+</ul>
+</form>
+</section>
 </nav>
-
 </header>
-
 <main id="container">
 
 </main>
 
-<form action="character_form" method="POST">
-<h2>Añadir Personaje</h2>
-
+<form action="/character_form" method="POST">
+<h2>Añadir personaje</h2>
 <p><label for="character-name">Nombre</label>
-<input type="text" name="name" id="character-name"/></p>
-
+<input type="text" name="name" id="character-name" /></p>
 <p><label for="character-age">Edad</label>
-<input type="text" name="age" id="character-age"/></p>
-
+<input type="text" name="age" id="character-age" /></p>
 <p><input type="submit" value="¡Añadir personaje!" /></p>
 </form>
+
+
 <script>
 function getCharacters()
 {
 
-	fetch("/Characters")
+	fetch("/characters")
 		.then(response => response.json())
 		.then(characters => {
-
-	let list = "<ul>";
-
-		for(let i = 0; i < characters.length;i++)
-		{
-			list +="<li>" + characters[i] + "</li>";
-			}
-				list += "</ul>"
-
+			let list = "<ul>";
+			for (let i = 0; i < characters.length; i++){
+			list += "<li>" + characters[i] + "</li>";
+			}	
+			list += "</ul>"
 			document.getElementById("container").innerHTML = list;
+			});
+		}
+
+function getItems(){
+
+fetch("/items")
+
+.then(response => response.json())
+
+.then(items => {
+
+
+let list = "<ul>";
+
+for (let i = 0; i < items.length; i++){
+
+
+list += "<li>" + items[i] + "</li>";
+
+}	
+
+list += "</ul>"
+
+
+document.getElementById("container").innerHTML = list;
+
 	});
 }
 
-function getItems()
+function getWeapons(){
+
+										
+fetch("/weapons")
+
+.then(response => response.json())
+
+.then(weapons => {
+
+
+let list = "<ul>";
+		
+		for (let i = 0; i < weapons.length; i++){
+			
+			list += "<li>" + weapons[i] + "</li>";
+				}	
+list += "</ul>"
+
+
+document.getElementById("container").innerHTML = list;
+
+	
+	});
+		}
+
+function getCharactersInfo(id_character)
+
 {
+	fetch("/?id_character="+id_character)
 
-	fetch("/items")
-		.then(response => response.json())
-		.then(items => {
+.then(response => response.json())
+																																																									
+	.then(info => {
 
-	let list = "<ul>";
+																																																								
+let list = "<ul>";
 
-		for(let i = 0; i < items.length;i++)
-		{
-			list +="<li>" + items[i] + "</li>";
-			}
-				list += "</ul>"
+list += "<li>Name: "+info[0].name+"</li>";
 
-			document.getElementById("container").innerHTML = list;
+list += "<li>Age: "+info[0].age+"</li>";
+
+list += "<li>Race: "+info[0].race+"</li>";
+
+list += "<li>Gender: "+info[0].gender+"</li>";
+
+list += "<li>Class: "+info[0].class+"</li>";
+
+list += "<li>Height: "+info[0].height+"</li>";
+
+list += "<li>Weight: "+info[0].weight+"</li>";
+
+list += "<li>Origin: "+info[0].origin+"</li>";
+
+list += "<li>Description: "+info[0].description+"</li>";
+
+list += "<li>ID: "+info[0].id_character+"</li>";
+
+list += "<li>Weapons: "+info[0].weapons+"</li>";
+
+list += "</ul>";
+
+document.getElementById("container").innerHTML = list;
+
+
 	});
-}
-function getWeapons()
-{
+																																																								
+	}
 
-	fetch("/weapons")
-		.then(response => response.json())
-		.then(weapons => {
-
-	let list = "<ul>";
-
-		for(let i = 0; i < weapons.length;i++)
-		{
-			list +="<li>" + weapons[i] + "</li>";
-			}
-				list += "</ul>"
-
-			document.getElementById("container").innerHTML = list;
-	});
-}
-
-
-
-</script>
-</body>
-
+		</script>
+	</body>
 </html>
 
