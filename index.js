@@ -36,7 +36,7 @@ db_connect()
 
 
 
-function send_characters (response)
+function characters (response)
 {
 
 	let collection = db.collection('Characters');
@@ -54,11 +54,11 @@ function send_characters (response)
 	});
 }
 
-function send_character_items (response, url)
+function character_items (response, url)
 {
 	let name = url[2].trim();
 	if (name == ""){
-		response.write("ERROR: URL mal formada");
+		response.write("ERROR: Wrong URL");
 		response.end();
 
 		return;
@@ -67,7 +67,7 @@ function send_character_items (response, url)
 	let collection = db.collection('characters');
 	collection.find({"name":name}).toArray().then(character => {
 		if (character.length != 1){
-			response.write("ERROR: el personaje "+name+" no existe");
+			response.write("ERROR: Character "+name+" not exists");
 			response.end();
 
 			return;
@@ -103,11 +103,11 @@ function send_character_items (response, url)
 	});
 }
 
-function send_items (response, url)
+function items (response, url)
 {
 
 	if (url.length >= 3){
-		send_character_items (response, url);
+		character_items (response, url);
 
 		return;
 	}
@@ -127,7 +127,7 @@ function send_items (response, url)
 	});
 }
 
-function send_weapons (response)
+function weapons (response)
 {
 
 	let collection = db.collection('weapons');
@@ -145,12 +145,12 @@ function send_weapons (response)
 	});
 }
 
-function send_age (response, url)
+function age (response, url)
 {
 
 if (url.length < 3){
 
-	response.write("ERROR: Introduce un personaje");
+	response.write("ERROR: Introduce a Character");
 	response.end();
 	return;
   
@@ -161,7 +161,7 @@ if (url.length < 3){
 	collection.find({"name":url[2]}).project({_id:0,age:1}).toArray().then(character => {
 		console.log(character);
 		  if (character.length == 0){
-			response.write("ERROR: Edad Erronea");
+			response.write("ERROR: Wrong Age");
 			response.end();
 			return;
 		}	
@@ -172,7 +172,7 @@ if (url.length < 3){
 	});
 }
 
-function send_character_info(response, id_character)
+function character_info(response, id_character)
 {
 	let collection = db.collection('Characters');
 
@@ -186,7 +186,7 @@ function send_character_info(response, id_character)
 function insert_character(request, response)
 {
 	if (request.method != "POST"){
-		response.write("ERROR: Formulario no enviado");
+		response.write("ERROR: Form not sent");
 		response.end();
 
 		return;
@@ -207,12 +207,12 @@ function insert_character(request, response)
 		let collection = db.collection("Characters");
 
 		if (info.name == undefined){
-			response.write("ERROR: Nombre no definido");
+			response.write("ERROR: Name not define");
 			response.end();
 			return;
 		}
 		if (info.age == undefined){
-			response.write("ERROR: Edad no definida");
+			response.write("ERROR: Age not define");
 			response.end();
 			return;
 		}
@@ -224,7 +224,7 @@ function insert_character(request, response)
 
 		collection.insertOne(insert_info);
 
-		response.write("Nuevo personaje "+insert_info.name+" insertado");
+		response.write("New Character "+insert_info.name+" insert");
 
 		response.end();
 	});
@@ -240,16 +240,16 @@ let http_server =  http.createServer(function(request, response){
 
 	switch (url[1]){
 		case "characters":
-			send_characters(response);
+			characters(response);
 			break;
 		case "items":
-			send_items(response, url);
+			items(response, url);
 			break;
 		case "weapons":
-			send_weapons(response);
+			weapons(response);
 			break;
 		case "age":
-			send_age(response, url);
+			age(response, url);
 			break;
 
 		case "character_form":
@@ -264,7 +264,7 @@ let http_server =  http.createServer(function(request, response){
 			let values = value[1].split("=");
 			let id_character = values[1];
 
-			send_character_info(response, id_character);
+			character_info(response, id_character);
 			
 			return;
 		}
@@ -273,7 +273,7 @@ let http_server =  http.createServer(function(request, response){
 			if(err){
 				console.error(err);
 				response.writeHead(404, {'Content-Type':'text/html'});
-				response.write("ERROR 404: el archivo no está en este castillo");
+				response.write("ERROR 404: Recharge the page");
 				response.end();
 
 				return;
@@ -287,4 +287,4 @@ let http_server =  http.createServer(function(request, response){
 
 	}
 	
-}).listen(6969);																																																																																																																																																																																																																																																																																								
+}).listen(7070);																																																																																																																																																																																																																																																																																								
