@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
@@ -45,113 +45,94 @@
 function getCharacters()
 {
 
-	fetch("/characters")
-		.then(response => response.json())
-		.then(characters => {
-			let list = "<ul>";
-			for (let i = 0; i < characters.length; i++){
+		fetch("/characters")
+			.then(response => response.json())
+			.then(characters => {
+
+		let list = "<ul>";
+		for (let i = 0; i < characters.length; i++){
 			list += "<li>" + characters[i] + "</li>";
-			}	
-			list += "</ul>"
-			document.getElementById("container").innerHTML = list;
-			});
-		}
+		}	
+		list += "</ul>"
 
-function getItems(){
-
-fetch("/items")
-
-.then(response => response.json())
-
-.then(items => {
-
-
-let list = "<ul>";
-
-for (let i = 0; i < items.length; i++){
-
-
-list += "<li>" + items[i] + "</li>";
-
-}	
-
-list += "</ul>"
-
-
-document.getElementById("container").innerHTML = list;
+		document.getElementById("container").innerHTML = list;
 
 	});
 }
 
-function getWeapons(){
+function getItems()
+{
 
-										
-fetch("/weapons")
+		fetch("/items")
+			.then(response => response.json())
+			.then(items => {
 
-.then(response => response.json())
+		let list = "<ul>";
+		for (let i = 0; i < items.length; i++){
+			list += "<li>" + items[i] + "</li>";
+		}	
+		list += "</ul>"
 
-.then(weapons => {
+		document.getElementById("container").innerHTML = list;
 
-
-let list = "<ul>";
-		
-		for (let i = 0; i < weapons.length; i++){
-			
-			list += "<li>" + weapons[i] + "</li>";
-				}	
-list += "</ul>"
-
-
-document.getElementById("container").innerHTML = list;
-
-	
 	});
-		}
+}
+
+function getWeapons()
+{
+
+		fetch("/weapons")
+			.then(response => response.json())
+			.then(weapons => {
+
+		let list = "<ul>";
+		for (let i = 0; i < weapons.length; i++){
+			list += "<li>" + weapons[i] + "</li>";
+		}	
+		list += "</ul>"
+
+		document.getElementById("container").innerHTML = list;
+
+	});
+}
 
 function getCharactersInfo(id_character)
-
 {
 	fetch("/?id_character="+id_character)
+		.then(response => response.json())
+		.then(info => {
 
-.then(response => response.json())
-																																																									
-	.then(info => {
+	let list = "<ul>";
+	
+		list += "<li>Name: "+info[0].name+"</li>";
 
-																																																								
-let list = "<ul>";
+		list += "<li>Age: "+info[0].age+"</li>";
 
-list += "<li>Name: "+info[0].name+"</li>";
+		list += "<li>Race: "+info[0].race+"</li>";
 
-list += "<li>Age: "+info[0].age+"</li>";
+		list += "<li>Gender: "+info[0].gender+"</li>";
 
-list += "<li>Race: "+info[0].race+"</li>";
+		list += "<li>Class: "+info[0].class+"</li>";
 
-list += "<li>Gender: "+info[0].gender+"</li>";
+		list += "<li>Height: "+info[0].height+"</li>";
 
-list += "<li>Class: "+info[0].class+"</li>";
+		list += "<li>Weight: "+info[0].weight+"</li>";
 
-list += "<li>Height: "+info[0].height+"</li>";
+		list += "<li>Origin: "+info[0].origin+"</li>";
 
-list += "<li>Weight: "+info[0].weight+"</li>";
+		list += "<li>Description: "+info[0].description+"</li>";
 
-list += "<li>Origin: "+info[0].origin+"</li>";
+		list += "<li>ID: "+info[0].id_character+"</li>";
 
-list += "<li>Description: "+info[0].description+"</li>";
+		list += "<li>Weapons: "+info[0].weapons+"</li>";
 
-list += "<li>ID: "+info[0].id_character+"</li>";
+	list += "</ul>";
 
-list += "<li>Weapons: "+info[0].weapons+"</li>";
-
-list += "</ul>";
-
-document.getElementById("container").innerHTML = list;
-
+		document.getElementById("container").innerHTML = list;
 
 	});
-																																																								
-	}
+}
 
-		</script>
-	</body>
+</script>
+</body>
 </html>
-
