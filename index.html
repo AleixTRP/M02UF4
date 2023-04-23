@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>MongoDB+NodeJS</title>
+<title>MongoDB/NodeJS</title>
 </head>
 <body>
 <header>
-<h1>MongoDB+NodeJS</h1>
+<h1>MongoDB/NodeJS</h1>
 <nav>
 <form>
 <ul>
@@ -45,13 +45,13 @@
 function getCharacters()
 {
 
-		fetch("/characters")
+		fetch("/Characters")
 			.then(response => response.json())
-			.then(characters => {
+			.then(Characters => {
 
 		let list = "<ul>";
-		for (let i = 0; i < characters.length; i++){
-			list += "<li>" + characters[i] + "</li>";
+		for (let i = 0; i < Characters.length; i++){
+			list += "<li>" + Characters[i] + "</li>";
 		}	
 		list += "</ul>"
 
@@ -96,9 +96,9 @@ function getWeapons()
 	});
 }
 
-function getCharactersInfo(id_character)
+function getCharactersInfo(id_Characters)
 {
-	fetch("/?id_character="+id_character)
+	fetch("/?id_Characters="+id_Characters)
 		.then(response => response.json())
 		.then(info => {
 
@@ -108,23 +108,20 @@ function getCharactersInfo(id_character)
 
 		list += "<li>Age: "+info[0].age+"</li>";
 
-		list += "<li>Race: "+info[0].race+"</li>";
+		list += "<li>Race: "+info[0].Race+"</li>";
 
-		list += "<li>Gender: "+info[0].gender+"</li>";
+		list += "<li>Gender: "+info[0].Gender+"</li>";
 
-		list += "<li>Class: "+info[0].class+"</li>";
+		list += "<li>Class: "+info[0].Class+"</li>";
 
-		list += "<li>Height: "+info[0].height+"</li>";
+		list += "<li>Height: "+info[0].Height+"</li>";
 
-		list += "<li>Weight: "+info[0].weight+"</li>";
+		list += "<li>Weight: "+info[0].Weight+"</li>";
 
-		list += "<li>Origin: "+info[0].origin+"</li>";
+		list += "<li>Origin: "+info[0].Origin+"</li>";
 
-		list += "<li>Description: "+info[0].description+"</li>";
+		list += "<li>ID: "+info[0].id_Characters+"</li>";
 
-		list += "<li>ID: "+info[0].id_character+"</li>";
-
-		list += "<li>Weapons: "+info[0].weapons+"</li>";
 
 	list += "</ul>";
 

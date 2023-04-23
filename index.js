@@ -39,7 +39,7 @@ db_connect()
 function send_characters (response)
 {
 
-	let collection = db.collection('characters');
+	let collection = db.collection('Characters');
 
 	collection.find({}).toArray().then(characters => {
 		let names = [];
@@ -76,7 +76,7 @@ function send_character_items (response, url)
 		let id = character[0].id_character;
 
 		let collection = db.collection('characters_items');
-		collection.find({"id_character":id}).toArray().then(ids => {
+		collection.find({"id_Characters":id}).toArray().then(ids => {
 			if (ids.length == 0){
 				
 				response.weite("[]");
@@ -155,7 +155,7 @@ if (url.length < 3){
 	return;
   
 }
-	let collection = db.collection('characters');
+	let collection = db.collection('Characters');
 	console.log(url);
 
 	collection.find({"name":url[2]}).project({_id:0,age:1}).toArray().then(character => {
@@ -174,9 +174,9 @@ if (url.length < 3){
 
 function send_character_info(response, id_character)
 {
-	let collection = db.collection('characters');
+	let collection = db.collection('Characters');
 
-	collection.find({"id_character":Number(id_character)}).toArray().then(character => {
+	collection.find({"id_Characters":Number(id_character)}).toArray().then(character => {
 
 		response.write(JSON.stringify(character));
 		response.end();
@@ -204,7 +204,7 @@ function insert_character(request, response)
 
 		console.log(info);
 		
-		let collection = db.collection("characters");
+		let collection = db.collection("Characters");
 
 		if (info.name == undefined){
 			response.write("ERROR: Nombre no definido");

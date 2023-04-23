@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AleixTRP/M02UF4#readme",
   "dependencies": {
+    "mongod": "^2.0.0",
     "mongodb": "^5.0.0"
   }
 }
